@@ -136,16 +136,16 @@ LOGGING = {
     },
     'handlers': {
         'default': {
-            'level': 'WRANING',
+            'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'os.path.join(BASE_DIR+"/static/logs/","all.log")',
+            'filename': os.path.join(BASE_DIR+"/static/logs/","all.log"),
             'formatter': 'standard',
         },
     },
     'loggers': {
         'default': {
             'handlers': ['default'],
-            'level': 'WARNNING',
+            'level': 'DEBUG',
             'propagate': False,
         },
     },
