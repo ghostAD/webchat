@@ -8,6 +8,7 @@ from django.http import HttpResponse
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')   
+from service.reply import reply
 
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
@@ -55,10 +56,11 @@ def autoreply(request):
         if msg_type == 'text':
             #print MsgContent
             if '资源' == MsgContent:
-                content = "假装输出了一个资源"
+                content = reply(MsgContent=MsgContent)['reply']
                 #print 'shucu'
             else:
                 content = "您好,欢迎来到回忆与梦的空间，输入'资源'试试"
+
             replyMsg = TextMsg(toUser, fromUser, content)
             #print "成功了!!!!!!!!!!!!!!!!!!!"
             #print replyMsg
