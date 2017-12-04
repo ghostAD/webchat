@@ -9,7 +9,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')   
 from service.reply import reply
-
+from service.learn import learn
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
 def weixin_main(request):
@@ -55,7 +55,13 @@ def autoreply(request):
         #print MsgContent
         if msg_type == 'text':
             #print MsgContent
-            if '资源' == MsgContent:
+            if MsgContent.startwith('s='):
+                learnContent = MsgContent[2:].split('w=')
+                if len(learnContent)>1:
+                    content = learn(learnContent[0],learnContent[1])
+                else:content = learn(learnContent[0])
+
+            elif '资源' == MsgContent:
                 content = reply(MsgContent=MsgContent)['reply']
                 #print 'shucu'
             else:
