@@ -7,6 +7,9 @@
 @time: 2017/12/4 14:37 
 """
 from ..models import Reply
+import logging
+logger = logging.getLogger('default')
+
 
 def learn(teachContent,weight=1):
     oldReply = Reply.objects.get(reply=teachContent)

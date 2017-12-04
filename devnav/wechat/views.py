@@ -10,6 +10,9 @@ reload(sys)
 sys.setdefaultencoding('utf8')   
 from service.reply import reply
 from service.learn import learn
+import logging
+logger = logging.getLogger('default')
+
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
 def weixin_main(request):
@@ -55,19 +58,20 @@ def autoreply(request):
         #print MsgContent
         if msg_type == 'text':
             #print MsgContent
+            logger.info('in:'+str(MsgContent))
             if MsgContent.startwith('s='):
                 learnContent = MsgContent[2:].split('w=')
                 if len(learnContent)>1:
-                    content = learn(learnContent[0],learnContent[1])
-                else:content = learn(learnContent[0])
+                    replyContent = learn(learnContent[0],learnContent[1])
+                else:replyContent = learn(learnContent[0])
 
             elif '资源' == MsgContent:
-                content = reply(MsgContent=MsgContent)['reply']
+                replyContent = reply(MsgContent=MsgContent)['reply']
                 #print 'shucu'
             else:
-                content = "您好,欢迎来到回忆与梦的空间，输入'资源'试试"
-
-            replyMsg = TextMsg(toUser, fromUser, content)
+                replyContent = "您好,欢迎来到回忆与梦的空间，输入'资源'试试"
+            logger.info('out:' + str(replyContent))
+            replyMsg = TextMsg(toUser, fromUser, replyContent)
             #print "成功了!!!!!!!!!!!!!!!!!!!"
             #print replyMsg
             return replyMsg.send()

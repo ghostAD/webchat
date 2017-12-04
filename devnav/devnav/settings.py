@@ -123,3 +123,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'filters': {
+    },
+    'handlers': {
+        'default': {
+            'level': 'WRANING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'os.path.join(BASE_DIR+"/static/logs/","all.log")',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'default': {
+            'handlers': ['default'],
+            'level': 'WARNNING',
+            'propagate': False,
+        },
+    },
+}
