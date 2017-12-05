@@ -12,7 +12,10 @@ logger = logging.getLogger('default')
 
 
 def learn(teachContent,weight=1):
-    oldReply = Reply.objects.get(reply=teachContent)
+    try:
+        oldReply = Reply.objects.get(reply=teachContent)
+    except:
+        oldReply=None
     if oldReply:
         Reply.objects.filter(reply=teachContent).update(oldReply.weight+1)
         return '增加权重'
@@ -20,6 +23,7 @@ def learn(teachContent,weight=1):
         weight = int(weight)
         Reply.objects.create(reply=teachContent, weight=weight)
         return '成功学习一条记录'
-    except:
+    except Exception,e:
+        logger.error(str(e))
         return '学习失败'
         #可能是重复插不进,可能格式不对

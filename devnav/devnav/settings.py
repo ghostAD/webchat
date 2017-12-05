@@ -138,7 +138,7 @@ LOGGING = {
         'default': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR+"/static/logs/","all.log"),
+            'filename': '/var/log/wechat/reply.log',
             'formatter': 'standard',
         },
     },

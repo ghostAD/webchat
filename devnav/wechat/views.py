@@ -59,7 +59,8 @@ def autoreply(request):
         if msg_type == 'text':
             #print MsgContent
             logger.info('in:'+str(MsgContent))
-            if MsgContent.startwith('s='):
+
+            if MsgContent.startswith('s='):
                 learnContent = MsgContent[2:].split('w=')
                 if len(learnContent)>1:
                     replyContent = learn(learnContent[0],learnContent[1])
@@ -103,7 +104,7 @@ def autoreply(request):
             return replyMsg.send()
 
     except Exception, Argment:
-        #print str(Argment)
+        logger.error(str(Argment))
         return Argment
 
 class Msg(object):
