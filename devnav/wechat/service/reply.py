@@ -50,6 +50,6 @@ def search_resource(queryString):
     resources = Resource.objects.filter(title__icontains=queryString)[:10]#后面需要加更多限制
     result=[]
     for resource in resources:
-        result.append(resource)
+        result.append(resource.url)
 
     return '\n'.join(result)
