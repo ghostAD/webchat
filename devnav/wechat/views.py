@@ -52,7 +52,8 @@ def autoreply(request):
         MsgType = xmlData.find('MsgType').text
         MsgId = xmlData.find('MsgId').text
         MsgContent = xmlData.find('Content').text
-        Event = xmlData.find('Event').text
+
+
 
         toUser = FromUserName
         fromUser = ToUserName
@@ -78,11 +79,13 @@ def autoreply(request):
             #print "成功了!!!!!!!!!!!!!!!!!!!"
             #print replyMsg
             return replyMsg.send()
-        elif Event == 'subscribe':
+        elif MsgType == 'event':
+            Event  = xmlData.find('Event').text
             #订阅事件
-            content = "欢迎订阅本公众号，输入想查询的资源名查询资源，如果查不到的话。。。试试就知道了"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
+            if Event == 'subscribe':
+                content = "欢迎订阅本公众号，输入想查询的资源名查询资源，如果查不到的话。。。试试就知道了"
+                replyMsg = TextMsg(toUser, fromUser, content)
+                return replyMsg.send()
 
         elif msg_type == 'image':
             content = "图片已收到,谢谢"
