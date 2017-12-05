@@ -16,12 +16,17 @@ def learn(teachContent,weight=1):
         oldReply = Reply.objects.get(reply=teachContent)
     except:
         oldReply=None
+
     if oldReply:
-        Reply.objects.filter(reply=teachContent).update(oldReply.weight+1)
+        try:
+            Reply.objects.filter(reply=teachContent).update(weight = oldReply.weight+1)
+        except Exception,e:
+            logger.error(str(e))
         return '增加权重'
     try:
         weight = int(weight)
         Reply.objects.create(reply=teachContent, weight=weight)
+        logger.info('learn success '+str(teachContent))
         return '成功学习一条记录'
     except Exception,e:
         logger.error(str(e))
