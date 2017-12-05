@@ -8,6 +8,9 @@
 """
 from ..models import Reply,Resource
 from django.db.models import Sum, Count,Avg
+import logging
+import datetime
+logger = logging.getLogger('default')
 def reply(MsgContent):
     queryResult = search_resource(MsgContent)
     if queryResult:
@@ -47,9 +50,12 @@ def weight_choice(list):
             return value
 
 def search_resource(queryString):
-    resources = Resource.objects.filter(title__icontains=queryString)[:10]#后面需要加更多限制
-    result=[]
-    for resource in resources:
-        result.append(resource.url)
-
-    return '\n'.join(result)
+    try:
+        resources = Resource.objects.filter(title__icontains=queryString)[:10]#后面需要加更多限制
+        result=[]
+        for resource in resources:
+            result.append(resource.url)
+        output = '\n'.join(result)
+    except Exception,e:
+        logger.error(str(e))
+    return output
