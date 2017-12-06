@@ -29,7 +29,14 @@ class Resource(models.Model):
     update_time = models.DateTimeField('events time',blank=True)
     create_time = models.DateTimeField(auto_now=True,blank=True)  # 创建时间(自动获取当前时间)
     verify_time = models.DateTimeField('verify time',blank=True)
-    owner = models.CharField(max_length=255,blank=True)
+    user = models.CharField(max_length=100,blank=True)#对应api的
+    uploader = models.CharField(max_length=100,blank=True)#对应api的
+    type = models.CharField(max_length=100, blank=True)#以,分割各种类型
     def __unicode__(self): # 将对象以str的方式显示出来
             # 在Python3中使用 def __str__(self):
             return self.url+self.title
+
+class user(models.Model):
+    name = models.CharField(max_length=100)
+    OpenID = models.CharField(max_length=100)
+    UnionID = models.CharField(max_length=100)

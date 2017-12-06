@@ -10,25 +10,46 @@ from ..models import Reply,Resource
 from django.db.models import Sum, Count,Avg
 import logging
 import datetime
+from ..crawler.mainprocess import keywordSearch
+
 logger = logging.getLogger('default')
+
 def reply(MsgContent):
     queryResult = search_resource(MsgContent)
     if queryResult:
         return {'reply': queryResult, 'mode': 0}
     #如果有资源就返回资源，如果没有就骂人 ,切换模式，模式需要在用户session中记录 输入别骂了才能切换回来 或者设置资源的前缀，不合法的都骂
-    results = Reply.objects.order_by("-weight").all()[:100]
-    replys=[]
-    for result in results:
-        reply = result.reply
-        weight = result.weight
-        replys.append([reply,weight])
-    reply = weight_choice(replys)
+    #reply = maRen()
+    reply = crawler(MsgContent)
     if reply:
         return {'reply':reply,'mode':0}
     else:
         return {'reply':'出bug啦！！','mode':1}
 
 import random
+
+#骂人回复
+def maRen():
+    results = Reply.objects.order_by("-weight").all()[:100]
+    replys = []
+    for result in results:
+        reply = result.reply
+        weight = result.weight
+        replys.append([reply, weight])
+    reply = weight_choice(replys)
+    return reply
+
+#爬虫回复
+def crawler(keyword):
+    rsDict = keywordSearch(keyword,sites=[19])
+    urlinfos = rsDict['urlinfos']
+    rs = []
+    for urlinfo in urlinfos:
+        rs.append("%s %s"%(urlinfo.get('title',''),urlinfo.get('url','')))
+
+    result =  '\n'.join(rs)[:590]  #限制貌似是600
+    logger.debug(result)
+    return result
 
 
 #带权重随机

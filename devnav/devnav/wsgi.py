@@ -18,6 +18,6 @@ if path not in sys.path:
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "devnav.settings")
+os.environ['DJANGO_SETTINGS_MODULE'] = "devnav.settings"#这里不要用默认的，不然多个项目部署会互相影响!!
 
 application = get_wsgi_application()
