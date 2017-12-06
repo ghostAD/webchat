@@ -24,7 +24,7 @@ def reply(MsgContent):
     if reply:
         return {'reply':reply,'mode':0}
     else:
-        return {'reply':'出bug啦！！','mode':1}
+        return {'reply':'出bug啦！！估计是网速不行，毕竟服务器不在国内，重试下吧','mode':1}
 
 import random
 
@@ -48,7 +48,7 @@ def crawler(keyword):
         rs.append("%s %s"%(urlinfo.get('title',''),urlinfo.get('url','')))
 
     result =  '\n'.join(rs)[:590]  #限制貌似是600
-    logger.debug(result)
+    #logger.debug(result)
     return result
 
 

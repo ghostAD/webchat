@@ -83,8 +83,10 @@ def autoreply(request):
             Event  = xmlData.find('Event').text
             #订阅事件
             if Event == 'subscribe':
-                content = "欢迎订阅本公众号，输入想查询的资源名查询资源，如果查不到的话。。。试试就知道了"
+                content = "欢迎订阅本公众号，输入想查询的资源名查询资源，因为微信回复必须在600字以内，" \
+                          "所以搜索时请具体一些，比如权力的游戏 第六季"
                 replyMsg = TextMsg(toUser, fromUser, content)
+                logger.info('login: from'+str(FromUserName)+' to '+str(ToUserName))
                 return replyMsg.send()
 
         elif msg_type == 'image':
