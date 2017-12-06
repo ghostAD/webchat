@@ -2,13 +2,17 @@
 import importlib
 import urllib
 import threading
+
+
 import Queue
 #后面：去重功能 结果穿插排序功能 生成翻页地址 默认的页面自动解析 同步访问 代理访问（统一就是一个访问接口/函数，接受一堆链接去同步调各种代理访问，响应结果） 同一网站多入口
+
+#移植需要修改路径
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-from calculate import similarCal
 
+from calculate import similarCal
 def keywordSearch(keyword,page='1',type='0',sites=[],sitesType=''):
 	TYPES={'0':'searchEngine','1':'movie','2':'music','3':'novel','4':'news','5':'code'}
 	keywordbf=keyword
@@ -114,11 +118,17 @@ def keywordSearch(keyword,page='1',type='0',sites=[],sitesType=''):
 				return None
 
 	li = []
+
+
+	import os
+	dirPath = os.path.abspath(os.path.dirname(__file__))
+	sys.path.append(dirPath)
+
 	for k,v in SITES.items():
 		try:
-			mo = importlib.import_module('.'.join(['searchForAll','crawler','extractors', k]))#这个地方需要并发
+			mo = importlib.import_module('.'.join(['extractors', k]))#这个地方需要并发
 		except:
-			mo = importlib.import_module('.'.join(['searchForAll', 'crawler', 'extractors', 'universal']))
+			mo = importlib.import_module('.'.join([ 'extractors', 'universal']))
 			v.append(k)
 
 #		response+=(mo.process(v))
