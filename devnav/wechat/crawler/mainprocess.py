@@ -120,15 +120,11 @@ def keywordSearch(keyword,page='1',type='0',sites=[],sitesType=''):
 	li = []
 
 
-	import os
-	dirPath = os.path.abspath(os.path.dirname(__file__))
-	sys.path.append(dirPath)
-
 	for k,v in SITES.items():
 		try:
-			mo = importlib.import_module('.'.join(['extractors', k]))#这个地方需要并发
+			mo = importlib.import_module('.'.join(['wechat','crawler','extractors', k]))#相对引用不能在最里层调用
 		except:
-			mo = importlib.import_module('.'.join([ 'extractors', 'universal']))
+			mo = importlib.import_module('.'.join(['wechat', 'crawler', 'extractors', 'universal']))
 			v.append(k)
 
 #		response+=(mo.process(v))
