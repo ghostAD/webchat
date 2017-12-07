@@ -69,7 +69,7 @@ def autoreply(request):
                 else:replyContent = learn(learnContent[0])
 
             elif MsgContent :
-                replyContent = reply(MsgContent=MsgContent)['reply']
+                replyContent = reply(MsgContent=MsgContent,userOpenId=fromUser)['reply']
 
                 #print 'shucu'
             else:

@@ -14,13 +14,13 @@ from ..crawler.mainprocess import keywordSearch
 
 logger = logging.getLogger('default')
 
-def reply(MsgContent):
-    queryResult = search_resource(MsgContent)
+def reply(MsgContent,userOpenId=''):
+    queryResult = search_resource(MsgContent,userOpenId)
     if queryResult:#这个逻辑后面得改，不兼容搜索，要么就是根据公众号类型不同返回
        return {'reply': queryResult, 'mode': 0}
     #如果有资源就返回资源，如果没有就骂人 ,切换模式，模式需要在用户session中记录 输入别骂了才能切换回来 或者设置资源的前缀，不合法的都骂
     #reply = maRen()
-    reply = crawler(MsgContent)
+    reply = crawler(MsgContent,userOpenId=userOpenId)
     if reply:
         return {'reply':reply,'mode':0}
     else:
@@ -40,7 +40,7 @@ def maRen():
     return reply
 
 #爬虫回复
-def crawler(keyword):
+def crawler(keyword,userOpenId=''):
     rsDict = keywordSearch(keyword,sites=[19])
     urlinfos = rsDict['urlinfos']
     rs = []
@@ -49,7 +49,7 @@ def crawler(keyword):
         url = urlinfo.get('url','')
         rs.append("%s %s"%(title,url))
         if title and url:
-            save_resource(title,url,keyword)
+            save_resource(title,url,keyword,userOpenId=userOpenId)
 
     result =  '\n'.join(rs)[:590]  #限制貌似是600
     #logger.debug(result)
@@ -74,7 +74,7 @@ def weight_choice(list):
         if sumChoice>= choiceInt:
             return value
 
-def search_resource(queryString):
+def search_resource(queryString,userOpenId=''):
     try:
         now = datetime.datetime.now()
         start = now-datetime.timedelta(hours=23, minutes=59, seconds=59)#缓存一天的数据
@@ -87,13 +87,14 @@ def search_resource(queryString):
         logger.error(str(e))
     return output
 
-def save_resource(title,url,keyword,uploader='system'):
+def save_resource(title,url,keyword,userOpenId='',uploader='system'):
     try:
         r = Resource_Cache()
         r.title=title
         r.url = url
         r.keyword = keyword
         r.uploader = uploader
+        r.OpenID = userOpenId
         r.create_time = datetime.datetime.now()
         r.save()
     except Exception,e:
