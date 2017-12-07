@@ -33,8 +33,8 @@ class Resource(models.Model):
     user = models.CharField(max_length=100,blank=True)#对应api的
     uploader = models.CharField(max_length=100,blank=True)#对应api的
     type = models.CharField(max_length=100, blank=True)#以,分割各种类型
-    OpenID = models.CharField(max_length=100)
-    UnionID = models.CharField(max_length=100)
+    OpenID = models.CharField(max_length=100, blank=True)
+    UnionID = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self): # 将对象以str的方式显示出来
             # 在Python3中使用 def __str__(self):
@@ -42,8 +42,8 @@ class Resource(models.Model):
 
 class User(models.Model):
     name = models.CharField(max_length=100)
-    OpenID = models.CharField(max_length=100)
-    UnionID = models.CharField(max_length=100)
+    OpenID = models.CharField(max_length=100, blank=True)
+    UnionID = models.CharField(max_length=100, blank=True)
 
 class Resource_Cache(models.Model):
     keyword = models.CharField(max_length=100)
@@ -58,8 +58,8 @@ class Resource_Cache(models.Model):
     user = models.CharField(max_length=100,blank=True)#对应api的
     uploader = models.CharField(max_length=100,blank=True)#对应api的
     type = models.CharField(max_length=100, blank=True)#以,分割各种类型
-    OpenID = models.CharField(max_length=100)
-    UnionID = models.CharField(max_length=100)
+    OpenID = models.CharField(max_length=100, blank=True)
+    UnionID = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self): # 将对象以str的方式显示出来
             # 在Python3中使用 def __str__(self):
