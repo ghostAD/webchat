@@ -32,7 +32,7 @@ def weixin_main(request):
         if hashstr == signature:
           return HttpResponse(echostr)
         else:
-          return HttpResponse("field")
+          return HttpResponse("failed")
     else:
         othercontent = autoreply(request)
         return HttpResponse(othercontent)
@@ -69,7 +69,7 @@ def autoreply(request):
                 else:replyContent = learn(learnContent[0])
 
             elif MsgContent :
-                replyContent = reply(MsgContent=MsgContent,userOpenId=fromUser)['reply']
+                replyContent = reply(MsgContent=MsgContent,userOpenId=fromUser)['reply']#传入的是公众号的openid？
 
                 #print 'shucu'
             else:
