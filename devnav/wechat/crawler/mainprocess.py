@@ -52,8 +52,7 @@ def keywordSearch(keyword,page='1',type='0',sites=[],sitesType=''):
 		27: {'baiduyunpan': [keyword, page]},
 		28: {'wiseso':[keyword, page]},
 		29: {'523525': [keyword, page]},
-
-
+		30: {'360kan': [keyword, page]},
 
 
 
