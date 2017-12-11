@@ -24,7 +24,7 @@ def reply(MsgContent,userOpenId=''):
     if reply:
         return {'reply':reply,'mode':0}
     else:
-        return {'reply':'出bug啦！！估计是网速不行，毕竟服务器不在国内，重试下吧','mode':1}
+        return {'reply':'没有搜到结果','mode':1}
 
 import random
 
@@ -55,7 +55,7 @@ def crawler(keyword,userOpenId=''):
     crawlerReply = ''
     strSum = 0
     for s in result:
-        if s.isdigit()|s.isalpha()|s.c.isspace():strSum+=1
+        if s.isdigit()|s.isalpha()|s.isspace():strSum+=1
         else:strSum+=4
         crawlerReply = crawlerReply + s
         if strSum >2000:break
