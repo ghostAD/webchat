@@ -51,14 +51,19 @@ def crawler(keyword,userOpenId=''):
         if title and url:
             save_resource(title,url,keyword,userOpenId=userOpenId)
 
-    result =  '\n'.join(rs)  #限制貌似是不能超过2048字节
+   # result =  '\n'.join(rs)  #限制貌似是不能超过2048字节
     crawlerReply = ''
     strSum = 0
-    for s in result:
-        if s.isdigit()|s.isalpha()|s.isspace():strSum+=1
-        else:strSum+=4
-        crawlerReply = crawlerReply + s
-        if strSum >2000:break
+    for resultStr in rs:
+        if strSum > 2000: break
+        for s in resultStr:
+            if s.isdigit()|s.isalpha()|s.isspace():strSum+=1
+            else:strSum+=4
+            crawlerReply = crawlerReply + s
+        crawlerReply = crawlerReply + '\n'
+
+
+
     #logger.debug(result)
     return crawlerReply
 
