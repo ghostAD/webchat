@@ -1,7 +1,0 @@
-[extractor0]
-searchUrl:https://so.360kan.com/index.php?kw=${keyword}&from=
-segment://div[@class="b-series-number-container g-clear"]/a
-title://a
-url://a/@href
-info:
-
