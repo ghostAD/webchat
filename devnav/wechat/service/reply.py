@@ -47,7 +47,7 @@ def crawler(keyword,userOpenId=''):
     for urlinfo in urlinfos:
         title = urlinfo.get('title','')
         url = urlinfo.get('url','')
-        rs.append("%s %s"%(title,url))
+        rs.append("<a href='%s'>%s</a> "%(url,title))
         if title and url:
             save_resource(title,url,keyword,userOpenId=userOpenId)
 
