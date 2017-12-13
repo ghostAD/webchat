@@ -145,12 +145,14 @@ def keywordSearch(keyword,page='1',type='0',sites=[],sitesType=''):
 
 	#print v
 	#根据url去重
-	sortedResponse={}
+	import collections
+	sortedResponse=collections.OrderedDict()
 	for result in response:
 		sortedResponse[result.get('url')]=result
 	response=[]
-	for k,v in sortedResponse.items():#暂且根据长度排列？
+	for k,v in sortedResponse.items():#有序的好
 		response.append(v)
+
 	#print response
 	#response需要来个智能排序
 	rsAfterSort=None
