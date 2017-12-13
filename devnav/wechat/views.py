@@ -68,7 +68,7 @@ def autoreply(request):
                     replyContent = learn(learnContent[0],learnContent[1])
                 else:replyContent = learn(learnContent[0])
             if MsgContent.startswith('qgg '):
-                keyword = MsgContent[2:]
+                keyword = MsgContent[4:]
                 replyContent = reply(MsgContent=keyword, userOpenId=fromUser,mod='qgg')['reply']
             elif MsgContent :
                 replyContent = reply(MsgContent=MsgContent,userOpenId=fromUser)['reply']#传入的是公众号的openid？
