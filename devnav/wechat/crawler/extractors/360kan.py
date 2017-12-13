@@ -30,7 +30,7 @@ def process(keyword,page):
                 localurl=ct.getRegex('(http.*?)\?', ct.getXpath('//a/@href',segment)[0])
                 if localurl:
                     urlinfo['url']= "http://api.baiyug.cn/vip/index.php?url=" + localurl
-                    urlinfo['title'] =  HTMLParser().unescape(ct.getXpath('//a/text()',segment))
+                    urlinfo['title'] =  HTMLParser().unescape(ct.getXpath('//a/text()',segment)[0])
                     urlinfos.append(urlinfo)
                 else:
                     pass
@@ -53,7 +53,7 @@ def process(keyword,page):
                 # print localurl
                 if localurl:
                     urlinfo['url']= "http://api.baiyug.cn/vip/index.php?url=" + localurl
-                    urlinfo['title'] =  HTMLParser().unescape(ct.getXpath('//div[@class="b-mainpic"]/a/@title',segment))
+                    urlinfo['title'] =  HTMLParser().unescape(ct.getXpath('//div[@class="b-mainpic"]/a/@title',segment)[0])
                     urlinfos.append(urlinfo)
                 else:
                     pass
