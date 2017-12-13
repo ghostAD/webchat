@@ -63,7 +63,7 @@ def crawler(keyword,userOpenId='',sites=[19],mod=''):
             if s.isdigit()|s.isalpha()|s.isspace():strSum+=1
             else:strSum+=4
             crawlerReply = crawlerReply + s
-        crawlerReply = crawlerReply + '\n'
+        crawlerReply = crawlerReply + '\n\n'
 
 
 
@@ -96,7 +96,7 @@ def search_resource(queryString,userOpenId=''):
         resources = Resource_Cache.objects.filter(create_time__gt=start).filter(keyword__iexact=queryString)[:10]#后面需要加更多限制 反正也显示不了10条
         result=[]
         for resource in resources:
-            result.append(resource.title + ' '+resource.url)
+            result.append('''<a href='%s'>%s</a> '''%(resource.url,resource.title))
         output = '\n'.join(result)
     except Exception,e:
         logger.error(str(e))

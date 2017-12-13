@@ -85,8 +85,8 @@ def autoreply(request):
             Event  = xmlData.find('Event').text
             #订阅事件
             if Event == 'subscribe':
-                content = "欢迎订阅本公众号，输入想查询的资源名查询资源，因为微信回复必须在600字以内，" \
-                          "所以搜索时请具体一些，比如权力的游戏 第六季"
+                content = "欢迎订阅本公众号，输入资源名查询百度云资源，输入qgg 资源名 获取各大视频网站免会员去广告视频入口" \
+                          "搜索时请具体一些，比如权力的游戏 第六季 或qgg 爱情公寓4"
                 replyMsg = TextMsg(toUser, fromUser, content)
                 logger.info('login: from'+str(FromUserName)+' to '+str(ToUserName))
                 return replyMsg.send()
