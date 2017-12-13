@@ -2,5 +2,7 @@
 import importlib
 if __name__=='__main__':
     print 'test'
-    mo =importlib.import_module('.'.join(["crawler",'extractors','universal']))
-    print mo.process("mom",'1','panduoduo')
+    #mo =importlib.import_module('.'.join(["crawler",'extractors','universal']))
+    mo =importlib.import_module('.'.join(["crawler",'extractors','360kan']))
+
+    print mo.process("爱情公寓",'1')

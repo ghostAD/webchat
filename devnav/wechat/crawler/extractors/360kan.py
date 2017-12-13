@@ -46,7 +46,11 @@ def process(keyword,page):
                 #print segment
                 urlinfo={}
                 localurl=ct.getRegex('(http.*?)\?', ct.getXpath('//div[@class="button-container g-clear"]/div[1]/a/@href',segment)[0])
-                print localurl
+                if 'youku' in localurl and 'url=' in localurl:
+                    localurl = ct.getRegex('url=(.*?html)&', localurl)
+                else:
+                    localurl = localurl
+                # print localurl
                 if localurl:
                     urlinfo['url']= "http://api.baiyug.cn/vip/index.php?url=" + localurl
                     urlinfo['title'] =  HTMLParser().unescape(ct.getXpath('//div[@class="b-mainpic"]/a/@title',segment))

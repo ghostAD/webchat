@@ -14,13 +14,16 @@ from ..crawler.mainprocess import keywordSearch
 
 logger = logging.getLogger('default')
 
-def reply(MsgContent,userOpenId=''):
+def reply(MsgContent,userOpenId='',mod=''):
     queryResult = search_resource(MsgContent,userOpenId)
     if queryResult:#这个逻辑后面得改，不兼容搜索，要么就是根据公众号类型不同返回
        return {'reply': queryResult, 'mode': 0}
     #如果有资源就返回资源，如果没有就骂人 ,切换模式，模式需要在用户session中记录 输入别骂了才能切换回来 或者设置资源的前缀，不合法的都骂
     #reply = maRen()
-    reply = crawler(MsgContent,userOpenId=userOpenId)
+    if mod == 'qgg':
+        reply = crawler(MsgContent, userOpenId=userOpenId,sites=[30])
+    else:
+        reply = crawler(MsgContent,userOpenId=userOpenId,sites=[19])
     if reply:
         return {'reply':reply,'mode':0}
     else:
@@ -40,8 +43,8 @@ def maRen():
     return reply
 
 #爬虫回复
-def crawler(keyword,userOpenId=''):
-    rsDict = keywordSearch(keyword,sites=[19])
+def crawler(keyword,userOpenId='',sites=[19]):
+    rsDict = keywordSearch(keyword,sites=sites)
     urlinfos = rsDict['urlinfos']
     rs = []
     for urlinfo in urlinfos:
