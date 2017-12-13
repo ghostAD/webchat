@@ -15,7 +15,7 @@ from ..crawler.mainprocess import keywordSearch
 logger = logging.getLogger('default')
 
 def reply(MsgContent,userOpenId='',mod=''):
-    queryResult = search_resource(MsgContent,userOpenId)
+    queryResult = search_resource(MsgContent+'_'+mod,userOpenId)
     if queryResult:#这个逻辑后面得改，不兼容搜索，要么就是根据公众号类型不同返回
        return {'reply': queryResult, 'mode': 0}
     #如果有资源就返回资源，如果没有就骂人 ,切换模式，模式需要在用户session中记录 输入别骂了才能切换回来 或者设置资源的前缀，不合法的都骂
@@ -43,16 +43,16 @@ def maRen():
     return reply
 
 #爬虫回复
-def crawler(keyword,userOpenId='',sites=[19]):
+def crawler(keyword,userOpenId='',sites=[19],mod=''):
     rsDict = keywordSearch(keyword,sites=sites)
     urlinfos = rsDict['urlinfos']
     rs = []
     for urlinfo in urlinfos:
-        title = urlinfo.get('title','')
+        title = urlinfo.get('title','').replace("'",'"')
         url = urlinfo.get('url','')
-        rs.append("<a href='%s'>%s</a> "%(url,title))
+        rs.append('''<a href='%s'>%s</a> '''%(url,title))
         if title and url:
-            save_resource(title,url,keyword,userOpenId=userOpenId)
+            save_resource(title+'_'+mod,url,keyword,userOpenId=userOpenId)
 
    # result =  '\n'.join(rs)  #限制貌似是不能超过2048字节
     crawlerReply = ''
